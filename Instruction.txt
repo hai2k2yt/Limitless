@@ -1,0 +1,8 @@
+INSTRUCTIONS:
+First of all, you have to choose 2 numbers as min and max.Then the compiler will give you a number in range between those number. This is your start number.
+Rules:
+Each turn,The computer will give you 2 numbers randomly.You have to choose one which will be added to your start number.
+REMEMBER: You have to pick before the time runs out to keep your start number in range between min and max or you will lose,so choose wisely.
+- Have fun -
+
+Back to menu? (y/n)

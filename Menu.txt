@@ -1,0 +1,9 @@
+Limitness
+---------------------
+1.Instruction
+2.Choose mode
+3.Play
+4.Exit
+---------------------
+
+Enter a number:
