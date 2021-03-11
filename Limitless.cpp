@@ -5,6 +5,7 @@
 #include<cmath>
 #include<algorithm>
 #include<iomanip>
+#include<windows.h>
 
 using namespace std;
 
@@ -31,6 +32,7 @@ void print_instructions()
     cin>>is_back;
     if(is_back=='n'||is_back=='N')
     {
+        system("cls");
         print_instructions();
     }
 }
@@ -41,18 +43,22 @@ int main()
     int choose;
     do
     {
+        system("cls");
         print_menu();
         cin>>choose;
         switch (choose)
         {
         case 1:
+            system("cls");
             print_instructions();
             break;
         case 2:
-            choose_mode();
+            system("cls");
+            //choose_mode();
             break;
         case 3:
-            game_loop();
+            system("cls");
+            //game_loop();
             break;
         default:
             cout<<"Error: Invalid choice."<<endl;
