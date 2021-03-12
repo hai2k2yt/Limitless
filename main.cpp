@@ -21,7 +21,7 @@ void print_instructions()
 
 //choose max and min of number
 //choose start number
-void chooseMaxMin(int &num, int &max_num,int &min_num)
+void chooseMaxMin(int& num, int& max_num, int& min_num, int& random_range)
 {
     cout << "Choose your max number:";
     cin >> max_num;
@@ -30,16 +30,27 @@ void chooseMaxMin(int &num, int &max_num,int &min_num)
     while (min_num >= max_num)
     {
         gotoxy(0, 3);
-        cout << "Min number is invalid! Try again.     ";
+        cout << "Min number is invalid! Try again.               ";
         gotoxy(33,3);
         cin >> min_num;
     }
+    gotoxy(0, 3);
+    cout << "                                           ";
+    gotoxy(24, 2);
+    cout << "                ";
+    gotoxy(24, 2);
+    cout << min_num;
+    gotoxy(0, 2);
+    cout << "Choose your random range:";
+    cin >> random_range;
+
     gotoxy(0, 5);
     cout << "\nYour start number is:";
     num = rand() % (max_num - min_num) + min_num;
     cout << num;
     Sleep(2000);
     system("cls");
+
     //setup time to ready
     cout << "Ready!";
     for (int i = 3; i > 0; i--)
@@ -55,12 +66,12 @@ void chooseMaxMin(int &num, int &max_num,int &min_num)
 }
 
 //Set up game to start
-void createGameBegin(int &num,int &max_num,int &min_num,int &add1,int &add2,int &choose_number)
+void createGameBegin(int& num, int& max_num, int& min_num, int& random_range, int& add1, int& add2, int& choose_add)
 {
-    chooseMaxMin(num, max_num, min_num);
-    randomAdd(add1);
-    randomAdd(add2);
-    choose_number = 0;
+    chooseMaxMin(num, max_num, min_num, random_range);
+    randomAdd(add1, random_range);
+    randomAdd(add2, random_range);
+    choose_add = 0;
     //create game zone
     // 1.Tutorial
     draw_box(BOX_WIDTH, BOX_HEIGHT);
@@ -77,11 +88,13 @@ void createGameBegin(int &num,int &max_num,int &min_num,int &add1,int &add2,int 
     cout << "Max number: " << max_num;
     gotoxy(BOX_WIDTH - 10, BOX_HEIGHT + 3);
     cout << "Min number: " << min_num;
+    gotoxy(BOX_WIDTH - 10, BOX_HEIGHT + 4);
+    cout << "Random range: " << random_range;
 
     //Print number
-    gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 4);
-    cout << "Number:";
     gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 2);
+    cout << "Number:";
+    gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 4);
     cout << num;
 
     //Print add1
@@ -103,8 +116,8 @@ void createGameBegin(int &num,int &max_num,int &min_num,int &add1,int &add2,int 
 
 void game_loop()
 {
-    int num, max_num, min_num, add1, add2, choose_number;
-    createGameBegin(num, max_num, min_num, add1, add2, choose_number);
+    int num, max_num, min_num, random_range, add1, add2, choose_add;
+    createGameBegin(num, max_num, min_num, random_range, add1, add2, choose_add);
 
 
     //Choose add and put to number
@@ -119,33 +132,55 @@ void game_loop()
             //Take the left add
             if (key == 'a' || key == 'A')
             {
-                choose_number = add1;
+                choose_add = add1;
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 1);
                 cout << "      ";
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 1);
-                cout << choose_number;
+                cout << choose_add;
+
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 2);
+                cout << "      ";
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 2);
+                cout << "<<---";
             }
 
             //Take the right add
             if (key == 'd' || key == 'D')
             {
-                choose_number = add2;
+                choose_add = add2;
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 1);
                 cout << "      ";
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 1);
-                cout << choose_number;
+                cout << choose_add;
+
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 2);
+                cout << "      ";
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 2);
+                cout << "--->>";
             }
 
             //Put add to number
             if (key == 's' || key == 'S')
             {
-                if (choose_number == 0)continue;
-                num += choose_number;
-                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 2);
-                cout << "      ";
-
-                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 2);
+                if (choose_add == 0)continue;
+                num += choose_add;
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 4);
+                cout << "          ";
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 4);
                 cout << num;
+
+                //Show choose_add and number
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 5);
+                if (choose_add > 0)cout << "+";
+                cout << choose_add;
+                Sleep(500);
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 5);
+                cout << "         ";
+
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 2);
+                cout << "          ";
+                gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 2);
+                cout << "-----";
 
                 //Ckeck game over
                 if (num > max_num || num < min_num)
@@ -155,19 +190,19 @@ void game_loop()
                 }
 
                 //Show new adds after put
-                randomAdd(add1);
-                randomAdd(add2);
+                randomAdd(add1, random_range);
+                randomAdd(add2, random_range);
                 gotoxy(4, 6);
-                cout << "    ";
+                cout << "        ";
                 gotoxy(BOX_WIDTH - 10, 6);
-                cout << "    ";
+                cout << "        ";
                 gotoxy(4, 6);
                 cout << add1;
                 gotoxy(BOX_WIDTH - 10, 6);
                 cout << add2;
-                choose_number = 0;
+                choose_add = 0;
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 1);
-                cout << "      ";
+                cout << "         ";
             }
             //Press ESC to quit game
             if (key == 27)
