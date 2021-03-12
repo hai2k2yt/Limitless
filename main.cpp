@@ -19,10 +19,42 @@ void print_instructions()
     }
 }
 
-//Set up game to start
-void createGameBegin(int &num,int &add1,int &add2,int &choose_number)
+void chooseMaxMin(int &num, int &max_num,int &min_num)
 {
-    num = START_NUM;
+    cout << "Choose your max number:";
+    cin >> max_num;
+    cout << "Choose your min number:";
+    cin >> min_num;
+    while (min_num >= max_num)
+    {
+        gotoxy(0, 3);
+        cout << "Min number is invalid! Try again.     ";
+        gotoxy(33,3);
+        cin >> min_num;
+    }
+    gotoxy(0, 5);
+    cout << "\nYour start number is:";
+    num = rand() % (max_num - min_num) + min_num;
+    cout << num;
+    Sleep(2000);
+    system("cls");
+    cout << "Ready!";
+    for (int i = 3; i > 0; i--)
+    {
+        gotoxy(0, 1);
+        cout << i;
+        Sleep(1000);
+    }
+    gotoxy(0, 1);
+    cout << "GO!";
+    Sleep(1000);
+    system("cls");
+}
+
+//Set up game to start
+void createGameBegin(int &num,int &max_num,int &min_num,int &add1,int &add2,int &choose_number)
+{
+    chooseMaxMin(num, max_num, min_num);
     randomAdd(add1);
     randomAdd(add2);
     choose_number = 0;
@@ -38,9 +70,9 @@ void createGameBegin(int &num,int &add1,int &add2,int &choose_number)
 
     // 2.Rule
     gotoxy(BOX_WIDTH - 10, BOX_HEIGHT + 2);
-    cout << "Max number: " << MAX_NUM;
+    cout << "Max number: " << max_num;
     gotoxy(BOX_WIDTH - 10, BOX_HEIGHT + 3);
-    cout << "Min number: " << MIN_NUM;
+    cout << "Min number: " << min_num;
 
     //Print number
     gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 4);
@@ -67,8 +99,8 @@ void createGameBegin(int &num,int &add1,int &add2,int &choose_number)
 
 void game_loop()
 {
-    int num, add1, add2,choose_number;
-    createGameBegin(num, add1, add2, choose_number);
+    int num, max_num, min_num, add1, add2, choose_number;
+    createGameBegin(num, max_num, min_num, add1, add2, choose_number);
 
 
     //Choose add and put to number
@@ -106,7 +138,7 @@ void game_loop()
 
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 2);
                 cout << num;
-                if (num > MAX_NUM || num < MIN_NUM)
+                if (num > max_num || num < min_num)
                 {
                     continued = false;
                     break;
@@ -170,6 +202,7 @@ int main()
             exit(0);
         default:
             cout << "Error: Invalid choice." << endl;
+            Sleep(1000);
             break;
         }
     } while (!return_menu);
