@@ -19,6 +19,8 @@ void print_instructions()
     }
 }
 
+//choose max and min of number
+//choose start number
 void chooseMaxMin(int &num, int &max_num,int &min_num)
 {
     cout << "Choose your max number:";
@@ -38,6 +40,7 @@ void chooseMaxMin(int &num, int &max_num,int &min_num)
     cout << num;
     Sleep(2000);
     system("cls");
+    //setup time to ready
     cout << "Ready!";
     for (int i = 3; i > 0; i--)
     {
@@ -67,7 +70,8 @@ void createGameBegin(int &num,int &max_num,int &min_num,int &add1,int &add2,int 
     cout << "Press D to choose add2";
     gotoxy(0, BOX_HEIGHT + 4);
     cout << "Press S to put add to number";
-
+    gotoxy(3, 1);
+    cout << "While playing, press ESC to exit game";
     // 2.Rule
     gotoxy(BOX_WIDTH - 10, BOX_HEIGHT + 2);
     cout << "Max number: " << max_num;
@@ -111,6 +115,8 @@ void game_loop()
         if (_kbhit())
         {
             key = _getch();
+
+            //Take the left add
             if (key == 'a' || key == 'A')
             {
                 choose_number = add1;
@@ -120,6 +126,7 @@ void game_loop()
                 cout << choose_number;
             }
 
+            //Take the right add
             if (key == 'd' || key == 'D')
             {
                 choose_number = add2;
@@ -129,6 +136,7 @@ void game_loop()
                 cout << choose_number;
             }
 
+            //Put add to number
             if (key == 's' || key == 'S')
             {
                 if (choose_number == 0)continue;
@@ -138,12 +146,15 @@ void game_loop()
 
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT - 2);
                 cout << num;
+
+                //Ckeck game over
                 if (num > max_num || num < min_num)
                 {
                     continued = false;
                     break;
                 }
 
+                //Show new adds after put
                 randomAdd(add1);
                 randomAdd(add2);
                 gotoxy(4, 6);
@@ -158,10 +169,16 @@ void game_loop()
                 gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 1);
                 cout << "      ";
             }
+            //Press ESC to quit game
+            if (key == 27)
+            {
+                system("cls");
+                exit(0);
+            }
         }
     }
     
-
+    //Continue/Exit game
     gotoxy(BOX_WIDTH / 2, BOX_HEIGHT / 2 + 6);
     cout << "You lost.Exit to main menu?(y/n):";
     char s;
