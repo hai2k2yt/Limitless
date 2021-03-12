@@ -17,10 +17,8 @@ using namespace std;
 
 #define BOX_WIDTH 100
 #define BOX_HEIGHT 25
-#define START_NUM 0
-#define MAX_NUM 10
-#define MIN_NUM -10
-#define RANDOM_RANGE 10
+
+#define RANDOM_RANGE 15
 
 void gotoxy(int x, int y)
 {
