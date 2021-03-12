@@ -18,7 +18,6 @@ using namespace std;
 #define BOX_WIDTH 100
 #define BOX_HEIGHT 25
 
-#define RANDOM_RANGE 15
 
 void gotoxy(int x, int y)
 {
@@ -66,12 +65,12 @@ void draw_box(int x, int y)
     }
 }
 
-void randomAdd(int& add)
+void randomAdd(int& add, int& random_range)
 {
-    add = rand() % RANDOM_RANGE - RANDOM_RANGE / 2;
+    add = rand() % random_range - random_range / 2;
     while (add == 0)
     {
-        add = rand() % RANDOM_RANGE - RANDOM_RANGE / 2;
+        add = rand() % random_range - random_range / 2;
     }
 }
 
